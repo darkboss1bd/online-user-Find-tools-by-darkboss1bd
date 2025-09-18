@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Results for {{ username }} 🔍</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 800px; margin: auto; }
+        h2 { color: #333; }
+        ul { list-style: none; padding: 0; }
+        li { padding: 10px; margin: 5px 0; border-left: 4px solid #ddd; background: #fafafa; }
+        .found { border-left-color: #28a745; }
+        .not-found { border-left-color: #dc3545; }
+        .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; font-size: 14px; color: #666; text-align: center; }
+        .footer a { color: #007bff; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📊 Results for: <strong>{{ username }}</strong></h2>
+        <a href="/" style="display: inline-block; margin-bottom: 20px;">← Search Again</a>
+        <hr>
+
+        <ul>
+        {% for platform, data in results.items() %}
+            <li class="{% if data.exists %}found{% else %}not-found{% endif %}">
+                <strong>{{ platform }}:</strong>
+                {% if data.exists %}
+                    ✅ Found
+                    {% if data.url %} → <a href="{{ data.url }}" target="_blank">Visit Profile</a>{% endif %}
+                    {% if data.name %} (Name: {{ data.name }}){% endif %}
+                    {% if data.bio %} — Bio: {{ data.bio }}{% endif %}
+                {% else %}
+                    ❌ Not Found
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+
+        <div class="footer">
+            <p>Developed with ❤️ | Contact: <a href="{{ telegram }}" target="_blank">Telegram</a></p>
+            <p>More tools at: <a href="{{ website }}" target="_blank">SerialKey.top</a></p>
+        </div>
+    </div>
+</body>
+</html>
